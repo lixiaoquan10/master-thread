@@ -25,15 +25,12 @@ public:
     int  getTimeOut(const QString &lineName) const;
     void setDebugOut(bool isDebug);
     void Sleep(int msec);
-    void setTestLinkageCom(bool enable);
-    void setLinkageBaudRate(QString baudrateString);
 
     void canSendDataClear();
     void canReceiveDataClear();
 
 public slots:
     void doReciveData(const QString &name,const QByteArray& data);
-    void slot_ARTUDIsend();
 
 public:
     QHash<QString /*line name*/,CCommunicationLine*> m_hashCommunicationLine;
@@ -66,7 +63,7 @@ public:
 private slots:
 //    void handleLedReciveData();
 //    void handleLinkageReciveData();
-    void handleTestReciveData();
+//    void handleTestReciveData();
     void handleCan1ReciveData();
     void handleCan2ReciveData();
     void updataRecentSerialNumber(const QString &name,int nSerialNumber);

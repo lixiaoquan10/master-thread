@@ -25,6 +25,7 @@ SOURCES += bservice.cpp \
     ctrace.cpp \
     process/ccommunicationled.cpp \
     process/ccommunicationlinkage.cpp \
+    process/ccommunicationlinkagetest.cpp \
     process/cserialport.cpp \
     process/ccommandbytedata.cpp \
     process/ccommunicationmanager.cpp \
@@ -66,6 +67,7 @@ HEADERS += bservice.h \
     dialog/dlginformationwindow.h \
     process/ccommunicationled.h \
     process/ccommunicationlinkage.h \
+    process/ccommunicationlinkagetest.h \
     struct.h \
     ctrace.h \
     process/cserialport.h \

@@ -63,6 +63,7 @@ SOURCES       = ../BService/serial/qextserialport.cpp \
 		../BService/ctrace.cpp \
 		../BService/process/ccommunicationled.cpp \
 		../BService/process/ccommunicationlinkage.cpp \
+		../BService/process/ccommunicationlinkagetest.cpp \
 		../BService/process/cserialport.cpp \
 		../BService/process/ccommandbytedata.cpp \
 		../BService/process/ccommunicationmanager.cpp \
@@ -101,6 +102,7 @@ SOURCES       = ../BService/serial/qextserialport.cpp \
 		moc_dlginformationwindow.cpp \
 		moc_ccommunicationled.cpp \
 		moc_ccommunicationlinkage.cpp \
+		moc_ccommunicationlinkagetest.cpp \
 		moc_cserialport.cpp \
 		moc_ccommandbytedata.cpp \
 		moc_ccommunicationmanager.cpp \
@@ -140,6 +142,7 @@ OBJECTS       = qextserialport.o \
 		ctrace.o \
 		ccommunicationled.o \
 		ccommunicationlinkage.o \
+		ccommunicationlinkagetest.o \
 		cserialport.o \
 		ccommandbytedata.o \
 		ccommunicationmanager.o \
@@ -179,6 +182,7 @@ OBJECTS       = qextserialport.o \
 		moc_dlginformationwindow.o \
 		moc_ccommunicationled.o \
 		moc_ccommunicationlinkage.o \
+		moc_ccommunicationlinkagetest.o \
 		moc_cserialport.o \
 		moc_ccommandbytedata.o \
 		moc_ccommunicationmanager.o \
@@ -415,6 +419,7 @@ DIST          = /opt/Qt5.12.9/5.12.9/gcc_64/mkspecs/features/spec_pre.prf \
 		../BService/dialog/dlginformationwindow.h \
 		../BService/process/ccommunicationled.h \
 		../BService/process/ccommunicationlinkage.h \
+		../BService/process/ccommunicationlinkagetest.h \
 		../BService/struct.h \
 		../BService/ctrace.h \
 		../BService/process/cserialport.h \
@@ -461,6 +466,7 @@ DIST          = /opt/Qt5.12.9/5.12.9/gcc_64/mkspecs/features/spec_pre.prf \
 		../BService/ctrace.cpp \
 		../BService/process/ccommunicationled.cpp \
 		../BService/process/ccommunicationlinkage.cpp \
+		../BService/process/ccommunicationlinkagetest.cpp \
 		../BService/process/cserialport.cpp \
 		../BService/process/ccommandbytedata.cpp \
 		../BService/process/ccommunicationmanager.cpp \
@@ -938,8 +944,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../BService/images.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt5.12.9/5.12.9/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../BService/serial/qextserialport.h ../BService/serial/qextserialport_p.h ../BService/serial/qextserialenumerator.h ../BService/serial/qextserialenumerator_p.h ../BService/serial/qextserialport_global.h ../BService/bservice.h ../BService/cglobal.h ../BService/log/clog.h ../BService/dialog/dlginformationwindow.h ../BService/process/ccommunicationled.h ../BService/process/ccommunicationlinkage.h ../BService/struct.h ../BService/ctrace.h ../BService/process/cserialport.h ../BService/process/ccommandbytedata.h ../BService/process/ccommunicationmanager.h ../BService/process/cprocessbase.h ../BService/process/ccandatabytearray.h ../BService/process/packagetemplate.h ../BService/process/packageanalyzer.h ../BService/process/ccommunicationline.h ../BService/process/ccommunicationroute.h ../BService/process/cprocessdistribution.h ../BService/process/cprocesscontroller.h ../BService/struct/cmsgstructbase.h ../BService/struct/cmsgnull.h ../BService/struct/cmsgprocesstypename.h ../BService/cadapterobject.h ../BService/struct/cmsglog.h ../BService/struct/cmsgrouteconfig.h ../BService/struct/cmsgchecktime.h ../BService/process/cprocessclient.h ../BService/struct/cmsgloginfo.h ../BService/struct/cmsgprintset.h ../BService/struct/cmsgcheckset.h ../BService/struct/cmsgdirectiontest.h ../BService/struct/cmsgdeviceinfo.h ../BService/struct/cmsgevacuationgroup.h ../BService/struct/cmsgfirepoint.h ../BService/struct/cmsgpowerinfo.h ../BService/struct/cmsgobjectstatusinfo.h ../BService/struct/cmsgobjectstatus.h ../BService/struct/cmsgcontrollerinfo.h ../BService/struct/cmsglogin.h ../BService/struct/cmsgledinfo.h ../BService/cplatform_arm.h ../BService/process/cprocessmqtt.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../BService/serial/qextserialport.cpp ../BService/serial/qextserialenumerator.cpp ../BService/serial/qextserialport_unix.cpp ../BService/serial/qextserialenumerator_unix.cpp ../BService/bservice.cpp ../BService/cglobal.cpp ../BService/log/clog.cpp ../BService/dialog/dlginformationwindow.cpp ../BService/ctrace.cpp ../BService/process/ccommunicationled.cpp ../BService/process/ccommunicationlinkage.cpp ../BService/process/cserialport.cpp ../BService/process/ccommandbytedata.cpp ../BService/process/ccommunicationmanager.cpp ../BService/process/cprocessbase.cpp ../BService/process/ccandatabytearray.cpp ../BService/process/packagetemplate.cpp ../BService/process/packageanalyzer.cpp ../BService/process/ccommunicationline.cpp ../BService/process/ccommunicationroute.cpp ../BService/process/cprocessdistribution.cpp ../BService/process/cprocesscontroller.cpp ../BService/struct/cmsgstructbase.cpp ../BService/struct/cmsgnull.cpp ../BService/struct/cmsgprocesstypename.cpp ../BService/cadapterobject.cpp ../BService/struct/cmsglog.cpp ../BService/struct/cmsgrouteconfig.cpp ../BService/struct/cmsgchecktime.cpp ../BService/process/cprocessclient.cpp ../BService/struct/cmsgloginfo.cpp ../BService/struct/cmsgprintset.cpp ../BService/struct/cmsgcheckset.cpp ../BService/struct/cmsgdirectiontest.cpp ../BService/struct/cmsgdeviceinfo.cpp ../BService/struct/cmsgevacuationgroup.cpp ../BService/struct/cmsgfirepoint.cpp ../BService/struct/cmsgpowerinfo.cpp ../BService/struct/cmsgobjectstatusinfo.cpp ../BService/struct/cmsgobjectstatus.cpp ../BService/struct/cmsgcontrollerinfo.cpp ../BService/struct/cmsglogin.cpp ../BService/struct/cmsgledinfo.cpp ../BService/cplatform_arm.cpp ../BService/process/cprocessmqtt.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../BService/serial/qextserialport.h ../BService/serial/qextserialport_p.h ../BService/serial/qextserialenumerator.h ../BService/serial/qextserialenumerator_p.h ../BService/serial/qextserialport_global.h ../BService/bservice.h ../BService/cglobal.h ../BService/log/clog.h ../BService/dialog/dlginformationwindow.h ../BService/process/ccommunicationled.h ../BService/process/ccommunicationlinkage.h ../BService/process/ccommunicationlinkagetest.h ../BService/struct.h ../BService/ctrace.h ../BService/process/cserialport.h ../BService/process/ccommandbytedata.h ../BService/process/ccommunicationmanager.h ../BService/process/cprocessbase.h ../BService/process/ccandatabytearray.h ../BService/process/packagetemplate.h ../BService/process/packageanalyzer.h ../BService/process/ccommunicationline.h ../BService/process/ccommunicationroute.h ../BService/process/cprocessdistribution.h ../BService/process/cprocesscontroller.h ../BService/struct/cmsgstructbase.h ../BService/struct/cmsgnull.h ../BService/struct/cmsgprocesstypename.h ../BService/cadapterobject.h ../BService/struct/cmsglog.h ../BService/struct/cmsgrouteconfig.h ../BService/struct/cmsgchecktime.h ../BService/process/cprocessclient.h ../BService/struct/cmsgloginfo.h ../BService/struct/cmsgprintset.h ../BService/struct/cmsgcheckset.h ../BService/struct/cmsgdirectiontest.h ../BService/struct/cmsgdeviceinfo.h ../BService/struct/cmsgevacuationgroup.h ../BService/struct/cmsgfirepoint.h ../BService/struct/cmsgpowerinfo.h ../BService/struct/cmsgobjectstatusinfo.h ../BService/struct/cmsgobjectstatus.h ../BService/struct/cmsgcontrollerinfo.h ../BService/struct/cmsglogin.h ../BService/struct/cmsgledinfo.h ../BService/cplatform_arm.h ../BService/process/cprocessmqtt.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../BService/serial/qextserialport.cpp ../BService/serial/qextserialenumerator.cpp ../BService/serial/qextserialport_unix.cpp ../BService/serial/qextserialenumerator_unix.cpp ../BService/bservice.cpp ../BService/cglobal.cpp ../BService/log/clog.cpp ../BService/dialog/dlginformationwindow.cpp ../BService/ctrace.cpp ../BService/process/ccommunicationled.cpp ../BService/process/ccommunicationlinkage.cpp ../BService/process/ccommunicationlinkagetest.cpp ../BService/process/cserialport.cpp ../BService/process/ccommandbytedata.cpp ../BService/process/ccommunicationmanager.cpp ../BService/process/cprocessbase.cpp ../BService/process/ccandatabytearray.cpp ../BService/process/packagetemplate.cpp ../BService/process/packageanalyzer.cpp ../BService/process/ccommunicationline.cpp ../BService/process/ccommunicationroute.cpp ../BService/process/cprocessdistribution.cpp ../BService/process/cprocesscontroller.cpp ../BService/struct/cmsgstructbase.cpp ../BService/struct/cmsgnull.cpp ../BService/struct/cmsgprocesstypename.cpp ../BService/cadapterobject.cpp ../BService/struct/cmsglog.cpp ../BService/struct/cmsgrouteconfig.cpp ../BService/struct/cmsgchecktime.cpp ../BService/process/cprocessclient.cpp ../BService/struct/cmsgloginfo.cpp ../BService/struct/cmsgprintset.cpp ../BService/struct/cmsgcheckset.cpp ../BService/struct/cmsgdirectiontest.cpp ../BService/struct/cmsgdeviceinfo.cpp ../BService/struct/cmsgevacuationgroup.cpp ../BService/struct/cmsgfirepoint.cpp ../BService/struct/cmsgpowerinfo.cpp ../BService/struct/cmsgobjectstatusinfo.cpp ../BService/struct/cmsgobjectstatus.cpp ../BService/struct/cmsgcontrollerinfo.cpp ../BService/struct/cmsglogin.cpp ../BService/struct/cmsgledinfo.cpp ../BService/cplatform_arm.cpp ../BService/process/cprocessmqtt.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents BService_zh_CN.ts $(DISTDIR)/
 
 
@@ -980,9 +986,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /opt/Qt5.12.9/5.12.9/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /opt/Qt5.12.9/5.12.9/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_qextserialport.cpp moc_qextserialenumerator.cpp moc_dlginformationwindow.cpp moc_ccommunicationled.cpp moc_ccommunicationlinkage.cpp moc_cserialport.cpp moc_ccommandbytedata.cpp moc_ccommunicationmanager.cpp moc_cprocessbase.cpp moc_ccommunicationroute.cpp moc_cprocessdistribution.cpp moc_cprocesscontroller.cpp moc_cmsgstructbase.cpp moc_cmsgnull.cpp moc_cmsgprocesstypename.cpp moc_cadapterobject.cpp moc_cmsglog.cpp moc_cmsgrouteconfig.cpp moc_cmsgchecktime.cpp moc_cprocessclient.cpp moc_cmsgloginfo.cpp moc_cmsgprintset.cpp moc_cmsgcheckset.cpp moc_cmsgdirectiontest.cpp moc_cmsgdeviceinfo.cpp moc_cmsgevacuationgroup.cpp moc_cmsgfirepoint.cpp moc_cmsgpowerinfo.cpp moc_cmsgobjectstatusinfo.cpp moc_cmsgobjectstatus.cpp moc_cmsgcontrollerinfo.cpp moc_cmsglogin.cpp moc_cmsgledinfo.cpp
+compiler_moc_header_make_all: moc_qextserialport.cpp moc_qextserialenumerator.cpp moc_dlginformationwindow.cpp moc_ccommunicationled.cpp moc_ccommunicationlinkage.cpp moc_ccommunicationlinkagetest.cpp moc_cserialport.cpp moc_ccommandbytedata.cpp moc_ccommunicationmanager.cpp moc_cprocessbase.cpp moc_ccommunicationroute.cpp moc_cprocessdistribution.cpp moc_cprocesscontroller.cpp moc_cmsgstructbase.cpp moc_cmsgnull.cpp moc_cmsgprocesstypename.cpp moc_cadapterobject.cpp moc_cmsglog.cpp moc_cmsgrouteconfig.cpp moc_cmsgchecktime.cpp moc_cprocessclient.cpp moc_cmsgloginfo.cpp moc_cmsgprintset.cpp moc_cmsgcheckset.cpp moc_cmsgdirectiontest.cpp moc_cmsgdeviceinfo.cpp moc_cmsgevacuationgroup.cpp moc_cmsgfirepoint.cpp moc_cmsgpowerinfo.cpp moc_cmsgobjectstatusinfo.cpp moc_cmsgobjectstatus.cpp moc_cmsgcontrollerinfo.cpp moc_cmsglogin.cpp moc_cmsgledinfo.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_qextserialport.cpp moc_qextserialenumerator.cpp moc_dlginformationwindow.cpp moc_ccommunicationled.cpp moc_ccommunicationlinkage.cpp moc_cserialport.cpp moc_ccommandbytedata.cpp moc_ccommunicationmanager.cpp moc_cprocessbase.cpp moc_ccommunicationroute.cpp moc_cprocessdistribution.cpp moc_cprocesscontroller.cpp moc_cmsgstructbase.cpp moc_cmsgnull.cpp moc_cmsgprocesstypename.cpp moc_cadapterobject.cpp moc_cmsglog.cpp moc_cmsgrouteconfig.cpp moc_cmsgchecktime.cpp moc_cprocessclient.cpp moc_cmsgloginfo.cpp moc_cmsgprintset.cpp moc_cmsgcheckset.cpp moc_cmsgdirectiontest.cpp moc_cmsgdeviceinfo.cpp moc_cmsgevacuationgroup.cpp moc_cmsgfirepoint.cpp moc_cmsgpowerinfo.cpp moc_cmsgobjectstatusinfo.cpp moc_cmsgobjectstatus.cpp moc_cmsgcontrollerinfo.cpp moc_cmsglogin.cpp moc_cmsgledinfo.cpp
+	-$(DEL_FILE) moc_qextserialport.cpp moc_qextserialenumerator.cpp moc_dlginformationwindow.cpp moc_ccommunicationled.cpp moc_ccommunicationlinkage.cpp moc_ccommunicationlinkagetest.cpp moc_cserialport.cpp moc_ccommandbytedata.cpp moc_ccommunicationmanager.cpp moc_cprocessbase.cpp moc_ccommunicationroute.cpp moc_cprocessdistribution.cpp moc_cprocesscontroller.cpp moc_cmsgstructbase.cpp moc_cmsgnull.cpp moc_cmsgprocesstypename.cpp moc_cadapterobject.cpp moc_cmsglog.cpp moc_cmsgrouteconfig.cpp moc_cmsgchecktime.cpp moc_cprocessclient.cpp moc_cmsgloginfo.cpp moc_cmsgprintset.cpp moc_cmsgcheckset.cpp moc_cmsgdirectiontest.cpp moc_cmsgdeviceinfo.cpp moc_cmsgevacuationgroup.cpp moc_cmsgfirepoint.cpp moc_cmsgpowerinfo.cpp moc_cmsgobjectstatusinfo.cpp moc_cmsgobjectstatus.cpp moc_cmsgcontrollerinfo.cpp moc_cmsglogin.cpp moc_cmsgledinfo.cpp
 moc_qextserialport.cpp: ../BService/serial/qextserialport.h \
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QIODevice \
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qiodevice.h \
@@ -1381,9 +1387,93 @@ moc_ccommunicationlinkage.cpp: ../BService/process/ccommunicationlinkage.h \
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsharedpointer.h \
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QMutex \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QTimer \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbasictimer.h \
 		moc_predefs.h \
 		/opt/Qt5.12.9/5.12.9/gcc_64/bin/moc
 	/opt/Qt5.12.9/5.12.9/gcc_64/bin/moc $(DEFINES) --include /home/ubuntu64/work/master-Thread/build-BService-Arm_Qt5_12_9-Debug/moc_predefs.h -I/opt/Qt5.12.9/5.12.9/gcc_64/mkspecs/linux-g++ -I/home/ubuntu64/work/master-Thread/BService -I/home/ubuntu1204/mqtt/result_dir/paho.mqtt.cpp_result/include -I/home/ubuntu64/work/master-Thread/BService/serial -I/opt/Qt5.12.9/5.12.9/gcc_64/include -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtSvg -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtWidgets -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtGui -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtNetwork -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtSql -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtXml -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtSerialPort -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../BService/process/ccommunicationlinkage.h -o moc_ccommunicationlinkage.cpp
+
+moc_ccommunicationlinkagetest.cpp: ../BService/process/ccommunicationlinkagetest.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QCoreApplication \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcoreapplication.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringliteral.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringalgorithms.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringview.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qeventloop.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtSerialPort/QSerialPort \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtSerialPort/qserialport.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtSerialPort/qserialportglobal.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QThread \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qthread.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QDebug \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qset.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QMutex \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QTimer \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbasictimer.h \
+		moc_predefs.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/bin/moc
+	/opt/Qt5.12.9/5.12.9/gcc_64/bin/moc $(DEFINES) --include /home/ubuntu64/work/master-Thread/build-BService-Arm_Qt5_12_9-Debug/moc_predefs.h -I/opt/Qt5.12.9/5.12.9/gcc_64/mkspecs/linux-g++ -I/home/ubuntu64/work/master-Thread/BService -I/home/ubuntu1204/mqtt/result_dir/paho.mqtt.cpp_result/include -I/home/ubuntu64/work/master-Thread/BService/serial -I/opt/Qt5.12.9/5.12.9/gcc_64/include -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtSvg -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtWidgets -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtGui -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtNetwork -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtSql -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtXml -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtSerialPort -I/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../BService/process/ccommunicationlinkagetest.h -o moc_ccommunicationlinkagetest.cpp
 
 moc_cserialport.cpp: ../BService/process/cserialport.h \
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QHash \
@@ -4235,11 +4325,23 @@ ccommunicationled.o: ../BService/process/ccommunicationled.cpp ../BService/proce
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsharedpointer.h \
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QMutex \
+		../BService/cglobal.h \
+		../BService/bservice.h \
+		../BService/struct/cmsgrouteconfig.h \
+		../BService/struct/cmsgstructbase.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QObject \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QDataStream \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QHash \
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QFile \
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qfile.h \
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QVariant \
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QDateTime \
-		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qdatetime.h
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QTextCodec \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtextcodec.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QTextStream
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ccommunicationled.o ../BService/process/ccommunicationled.cpp
 
 ccommunicationlinkage.o: ../BService/process/ccommunicationlinkage.cpp ../BService/process/ccommunicationlinkage.h \
@@ -4316,6 +4418,9 @@ ccommunicationlinkage.o: ../BService/process/ccommunicationlinkage.cpp ../BServi
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsharedpointer.h \
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QMutex \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QTimer \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbasictimer.h \
 		../BService/cglobal.h \
 		../BService/bservice.h \
 		../BService/struct/cmsgrouteconfig.h \
@@ -4355,6 +4460,123 @@ ccommunicationlinkage.o: ../BService/process/ccommunicationlinkage.cpp ../BServi
 		../BService/struct.h \
 		../BService/struct/cmsgnull.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ccommunicationlinkage.o ../BService/process/ccommunicationlinkage.cpp
+
+ccommunicationlinkagetest.o: ../BService/process/ccommunicationlinkagetest.cpp ../BService/process/ccommunicationlinkagetest.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QCoreApplication \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcoreapplication.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringliteral.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringalgorithms.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringview.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qeventloop.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtSerialPort/QSerialPort \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtSerialPort/qserialport.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtSerialPort/qserialportglobal.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QThread \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qthread.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QDebug \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qset.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QMutex \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QTimer \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbasictimer.h \
+		../BService/cglobal.h \
+		../BService/bservice.h \
+		../BService/struct/cmsgrouteconfig.h \
+		../BService/struct/cmsgstructbase.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QObject \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QDataStream \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QHash \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QFile \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QVariant \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QDateTime \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qdatetime.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QTextCodec \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtextcodec.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QTextStream \
+		../BService/process/cprocesscontroller.h \
+		../BService/process/cprocessbase.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QSet \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QByteArray \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtGui/QList \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtGui/qevent.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtGui/qtguiglobal.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtGui/qtgui-config.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qurl.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/qurlquery.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtGui/qvector2d.h \
+		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtGui/qtouchdevice.h \
+		../BService/struct.h \
+		../BService/struct/cmsgnull.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ccommunicationlinkagetest.o ../BService/process/ccommunicationlinkagetest.cpp
 
 cserialport.o: ../BService/process/cserialport.cpp ../BService/process/cserialport.h \
 		/opt/Qt5.12.9/5.12.9/gcc_64/include/QtCore/QHash \
@@ -7024,6 +7246,9 @@ moc_ccommunicationled.o: moc_ccommunicationled.cpp
 
 moc_ccommunicationlinkage.o: moc_ccommunicationlinkage.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ccommunicationlinkage.o moc_ccommunicationlinkage.cpp
+
+moc_ccommunicationlinkagetest.o: moc_ccommunicationlinkagetest.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ccommunicationlinkagetest.o moc_ccommunicationlinkagetest.cpp
 
 moc_cserialport.o: moc_cserialport.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_cserialport.o moc_cserialport.cpp

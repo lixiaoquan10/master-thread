@@ -119,6 +119,7 @@
 #include "struct.h"
 #include "ccommunicationled.h"
 #include "ccommunicationlinkage.h"
+#include "ccommunicationlinkagetest.h"
 
 #define INTERFACEBOARD_TIMEOUT 4000
 #define INTERFACEBOARD_PORT_NUMBER_STR "_portNumber_"   // 0 ~ 4, 0 is the interface board
@@ -170,6 +171,7 @@ signals:
     void processRecvEvent(const QString& processname, const int &infotype, const QHash<QString, QVariant>& control, const QByteArray &data);
     void ledSendDataRequested(const int &ledStatus1, const int &ledStatus2, const int &ledStatus3);     // 灯键发送数据信号
     void linkageSendDataRequested(const QByteArray &data); // 火报发送数据信号
+    void linkageTestSendDataRequested(); // 火报通讯端口测试发送数据信号
 public slots:
     void procCommunicationRecvEvent(const QString &lineName,const int &infoType,
                                     const QHash<QString, QVariant> &controlDomain,
@@ -178,26 +180,21 @@ public slots:
     void slot_dataProcessed(const int &type, const QByteArray &data);
     void slot_ChangeLinkageSerialPort();
     void slot_switchLedAndLinkageSerial(const QByteArray &data);
+    void slot_linkageTestReturnSendData();
 public:
     CCommunicationManager*  m_communicationManager;
-    //灯键串口
-    QSerialPort *m_ledSerialPort;
-    //灯键发送线程
-    QThread *m_ledSendThread;
-    //灯键发送处理类
-    ledSerialSender *m_ledSerialSender;
-    //灯键接收线程
-    QThread *m_ledReceiveThread;
-    //灯键接收处理类
-    ledSerialReceiver *m_ledSerialReceiver;
-    //火报串口
-    QSerialPort *m_linkageSerialPort;
-    //火报线程
-    QThread *m_linkageThread;
-    //火报处理类
-    linkageSerialWorker *m_linkageSerial;
-    //火报波特率
-    long m_linkageBaudrate;
+    QSerialPort *m_ledSerialPort;              //灯键串口
+    QThread *m_ledSendThread;                  //灯键发送线程
+    ledSerialSender *m_ledSerialSender;        //灯键发送处理类
+    QThread *m_ledReceiveThread;               //灯键接收线程
+    ledSerialReceiver *m_ledSerialReceiver;    //灯键接收处理类
+    QSerialPort *m_linkageSerialPort;          //火报串口
+    QThread *m_linkageThread;                  //火报线程
+    linkageSerialWorker *m_linkageSerial;      //火报处理类
+    long m_linkageBaudrate;                    //火报波特率
+    QSerialPort *m_linkageTestSerialPort;        //火报通讯端口测试串口
+    QThread *m_linkageTestThread;                //火报通讯端口测试线程
+    linkageTestSerialWorker *m_linkageTestSerial;//火报通讯端口测试处理类
 private:
     CCommunicationManager*  m_printManager;
     QHash<int, int>         m_interfaceBoardPortSpeed;

@@ -18,6 +18,8 @@ CCommunicationRoute::CCommunicationRoute(QObject *parent) :
 {
     initCommunicationManager();
 //    createCommunication(CT_LedCard);
+//    createCommunication(CT_LinkageCard);
+//    createCommunication(CT_TestCard);
 
     // 创建led串口
     m_ledSerialPort = makeSerialPort("/dev/ttyUSB0", QSerialPort::Baud19200);
@@ -38,17 +40,6 @@ CCommunicationRoute::CCommunicationRoute(QObject *parent) :
     m_ledReceiveThread->start();
     connect(m_ledSerialReceiver, &ledSerialReceiver::dataReceived, this, &CCommunicationRoute::slot_dataProcessed);
 
-//    // 创建led线程
-//    m_ledThread = new QThread;
-//    ledSerialWorker *ledSerial = new ledSerialWorker(ledSerialPort);
-//    ledSerial->moveToThread(m_ledThread);
-//    // 启动led线程
-//    m_ledThread->start();
-//    // 连接led数据发送信号
-//    connect(this, &CCommunicationRoute::ledSendDataRequested, ledSerial, &ledSerialWorker::sendData);
-//    // 连接led数据接收信号
-//    connect(ledSerial, &ledSerialWorker::ledDataReceived, this, &CCommunicationRoute::onDataProcessed);
-
     // 创建linkage串口
     m_linkageSerialPort = makeSerialPort("/dev/ttyUSB1", QSerialPort::Baud19200);
 
@@ -65,8 +56,22 @@ CCommunicationRoute::CCommunicationRoute(QObject *parent) :
     // 连接交换灯键和火报串口信号
     connect(m_linkageSerial, &linkageSerialWorker::switchLedAndLinkageSerial, this, &CCommunicationRoute::slot_switchLedAndLinkageSerial);
 
-    //    createCommunication(CT_LinkageCard);
-    createCommunication(CT_TestCard);
+
+    // 创建linkageTest串口
+    m_linkageTestSerialPort = makeSerialPort("/dev/ttyUSB2", QSerialPort::Baud19200);
+
+    // 创建linkageTest线程
+    m_linkageTestThread = new QThread;
+    m_linkageTestSerial = new linkageTestSerialWorker(m_linkageTestSerialPort);
+    m_linkageTestSerial->moveToThread(m_linkageTestThread);
+    // 启动linkageTest线程
+    m_linkageTestThread->start();
+    // 连接linkageTest数据发送信号
+    connect(this, &CCommunicationRoute::linkageTestSendDataRequested, m_linkageTestSerial, &linkageTestSerialWorker::sendData);
+    // 连接linkageTest数据接收信号
+    connect(m_linkageTestSerial, &linkageTestSerialWorker::linkageTestDataReceived, this, &CCommunicationRoute::slot_dataProcessed);
+    // 连接linkageTest返回发送数据信号
+    connect(m_linkageTestSerial, &linkageTestSerialWorker::returnSendData, this, &CCommunicationRoute::slot_linkageTestReturnSendData);
 }
 
 CCommunicationRoute::~CCommunicationRoute()
@@ -230,64 +235,49 @@ void CCommunicationRoute::setLedStatus(const int ledStatus1, const int ledStatus
 void CCommunicationRoute::testLinkageCom()
 {
     //测试USB火报通讯口发送（中间层火报接口接收）
-    m_communicationManager->setTestLinkageCom(true);
     QTimer::singleShot(5000, this, SLOT(slot_stopTestLinkageCom()));
-    QString communicationLinkage = getCommunicationName(CT_LinkageCard);
-    if(communicationLinkage.isEmpty())
-        return;
-    if(communicationIsActive(communicationLinkage))
+
+    if(!m_linkageTestSerialPort->isOpen())
     {
-        QString linkagelinename = "linkagecard";
-        if(!m_communicationManager->m_hashCommunicationLine.contains(linkagelinename)) return;
-        CSerialPort* pSerialPort_linkage = m_communicationManager->m_hashCommunicationLine[linkagelinename]->pSerialPort;
-        QString testlinename = "testcard";
-        if(!m_communicationManager->m_hashCommunicationLine.contains(testlinename)) return;
-        CSerialPort* pSerialPort_test = m_communicationManager->m_hashCommunicationLine[testlinename]->pSerialPort;
-        if(pSerialPort_test && pSerialPort_linkage)
+        for(int i=3;i<5;i++)
         {
-            if(!pSerialPort_test->serialPort()->open(QIODevice::ReadWrite))
-            {
-                for(int i=2;i<5;i++)
-                {
-                    pSerialPort_test->serialPort()->close();
-                    pSerialPort_test->serialPort()->setPortName("/dev/ttyUSB"+ QString::number(i));
-                    //linkagecard的波特率
-                    BaudRateType baudRate = pSerialPort_linkage->serialPort()->baudRate();
-                    pSerialPort_test->serialPort()->setBaudRate(baudRate);
-                    QObject::connect(pSerialPort_test->serialPort(), SIGNAL(readyRead()), pSerialPort_test->serialPort(), SLOT(doReciveData()));
-                    if(pSerialPort_test->serialPort()->open(QIODevice::ReadWrite))
-                        break;
-                }
+            disconnect(m_linkageTestSerialPort, &QSerialPort::readyRead, m_linkageTestSerial, &linkageTestSerialWorker::readData);
+
+            // 如果串口已打开，则先关闭
+            if (m_linkageTestSerialPort->isOpen()) {
+                m_linkageTestSerialPort->close();
             }
-            char sum = 0;
-            QByteArray byteArray;
-            byteArray.append(char(0x55));
-            byteArray.append(char(0x13));
-            byteArray.append(char(0xFF));
-            byteArray.append(char(0xFF));
-            byteArray.append(char(0xFF));
-            for (int ix = 0; ix < byteArray.size(); ix++)
-                sum += byteArray.at(ix);
-            byteArray.append(sum);
-
-            pSerialPort_linkage->sendData(byteArray);
-
-            QString  data = "FasTestUSBSendData:  " + byteArray.toHex() + "   " + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz");
-            QFile file("/home/xfss/root/logfile/FasTestData.txt");
-
-            if (file.open(QIODevice::Append | QIODevice::Text))
+            m_linkageTestSerialPort->setBaudRate(m_linkageTestSerialPort->baudRate());
+            m_linkageTestSerialPort->setPortName("/dev/ttyUSB"+ QString::number(i));
+            if(m_linkageTestSerialPort->open(QIODevice::ReadWrite))
             {
-                QTextStream stream(&file);
-                stream << data << '\n' << '\n';
-                file.close();
+                connect(m_linkageTestSerialPort, &QSerialPort::readyRead, m_linkageTestSerial, &linkageTestSerialWorker::readData);
+                connect(m_linkageTestSerialPort, &QSerialPort::errorOccurred, m_linkageTestSerial, &linkageTestSerialWorker::onErrorOccurred);
+                break;
             }
         }
     }
+    char sum = 0;
+    QByteArray byteArray;
+    byteArray.append(char(0x55));
+    byteArray.append(char(0x13));
+    byteArray.append(char(0xFF));
+    byteArray.append(char(0xFF));
+    byteArray.append(char(0xFF));
+    for (int ix = 0; ix < byteArray.size(); ix++)
+        sum += byteArray.at(ix);
+    byteArray.append(sum);
+    emit linkageSendDataRequested(byteArray);
+}
+
+void CCommunicationRoute::slot_linkageTestReturnSendData()
+{
+    emit linkageTestSendDataRequested();
 }
 
 void CCommunicationRoute::slot_stopTestLinkageCom()
 {
-    m_communicationManager->setTestLinkageCom(false);
+    CGlobal::instance()->m_linkageTestStatus = 0;
 }
 
 void CCommunicationRoute::linkageSendData(QByteArray data)
@@ -340,6 +330,19 @@ void CCommunicationRoute::slot_ChangeLinkageSerialPort()
     if(m_linkageSerialPort->open(QIODevice::ReadWrite))
     {
         connect(m_linkageSerialPort, &QSerialPort::readyRead, m_linkageSerial, &linkageSerialWorker::readData);
+    }
+    //同步修改测试端口波特率
+    disconnect(m_linkageTestSerialPort, &QSerialPort::readyRead, m_linkageTestSerial, &linkageTestSerialWorker::readData);
+
+    // 如果串口已打开，则先关闭
+    if (m_linkageTestSerialPort->isOpen()) {
+        m_linkageTestSerialPort->close();
+    }
+    m_linkageTestSerialPort->setBaudRate(m_linkageBaudrate);
+    m_linkageTestSerialPort->setPortName(m_linkageTestSerialPort->portName());
+    if(m_linkageTestSerialPort->open(QIODevice::ReadWrite))
+    {
+        connect(m_linkageTestSerialPort, &QSerialPort::readyRead, m_linkageTestSerial, &linkageTestSerialWorker::readData);
     }
     CGlobal::instance()->processController()->startLinkageCom();
 }

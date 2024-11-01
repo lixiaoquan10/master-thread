@@ -18,7 +18,7 @@ CCommunicationManager::CCommunicationManager(QObject *parent) :
 //    connect(&m_ledReciveTimer, SIGNAL(timeout()), this, SLOT(handleLedReciveData()));
 //    connect(&m_linkageReciveTimer, SIGNAL(timeout()), this, SLOT(handleLinkageReciveData()));
 
-    connect(&m_testReciveTimer, SIGNAL(timeout()), this, SLOT(handleTestReciveData()));
+//    connect(&m_testReciveTimer, SIGNAL(timeout()), this, SLOT(handleTestReciveData()));
 
     connect(&m_Can1ReciveTimer, SIGNAL(timeout()), this, SLOT(handleCan1ReciveData()));
     connect(&m_Can2ReciveTimer, SIGNAL(timeout()), this, SLOT(handleCan2ReciveData()));
@@ -26,7 +26,7 @@ CCommunicationManager::CCommunicationManager(QObject *parent) :
 //    m_ledReciveTimer.start(30);
 //    m_linkageReciveTimer.start(30);
 
-    m_testReciveTimer.start(30);
+//    m_testReciveTimer.start(30);
 
     m_Can1ReciveTimer.start(15);
     m_Can2ReciveTimer.start(15);
@@ -44,41 +44,6 @@ CCommunicationManager::~CCommunicationManager()
     }
 }
 
-
-
-void CCommunicationManager::setTestLinkageCom(bool enable)
-{
-    qDebug() << "CCommunicationManager::setTestLinkageCom" << QDateTime::currentDateTime().toString("HH:mm:ss:zzz");
-    if(enable)
-        m_testReciveTimer.start(30);
-    else
-    {
-        m_testReciveTimer.stop();
-        CGlobal::instance()->m_linkageTestStatus = 0;
-    }
-}
-
-void CCommunicationManager::setLinkageBaudRate(QString baudrateString)
-{
-    qDebug() << "CCommunicationManager::setLinkageBaudRate" << QDateTime::currentDateTime().toString("HH:mm:ss:zzz");
-    QString linename = "linkagecard";
-    long baudrate = baudrateString.toLong(); // 将QString转换为整数
-    if(!m_hashCommunicationLine.contains(linename)) return;
-    CSerialPort* pSerialPort = m_hashCommunicationLine[linename]->pSerialPort;
-
-    if(pSerialPort)
-    {
-        pSerialPort->serialPort()->close();
-        QString portName = pSerialPort->serialPort()->portName();
-        pSerialPort->serialPort()->setPortName(portName);
-        pSerialPort->serialPort()->setBaudRate((BaudRateType)baudrate);
-        QObject::connect(pSerialPort->serialPort(), SIGNAL(readyRead()), pSerialPort->serialPort(), SLOT(doReciveData()));
-        if(!pSerialPort->serialPort()->open(QIODevice::ReadWrite))
-        {
-
-        }
-    }
-}
 
 int CCommunicationManager::getPortFromCommunicationType(int type)
 {
@@ -588,65 +553,65 @@ timer slot CCommunicationManager::handleReciveData
 //}
 
 
-void CCommunicationManager::handleTestReciveData()
-{
-    qDebug() << "CCommunicationManager::handleTestReciveData" << QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz");
-    CSerialPort* pSerialPort = m_hashCommunicationLine["testcard"]->pSerialPort;
-    QByteArray &receiveData = m_hashCommunicationLine["testcard"]->reciveData;
+//void CCommunicationManager::handleTestReciveData()
+//{
+//    qDebug() << "CCommunicationManager::handleTestReciveData" << QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz");
+//    CSerialPort* pSerialPort = m_hashCommunicationLine["testcard"]->pSerialPort;
+//    QByteArray &receiveData = m_hashCommunicationLine["testcard"]->reciveData;
 
-    if (receiveData.isEmpty())
-        return;
-    if(receiveData.count() < 6)
-    {
-        receiveData.clear();
-        return;
-    }
-    if(pSerialPort)
-    {
-        if(static_cast<unsigned char>(receiveData.at(2)) == 0xFF &&
-           static_cast<unsigned char>(receiveData.at(3)) == 0xFF &&
-           static_cast<unsigned char>(receiveData.at(4)) == 0xFF)
-        {
-            QString dataReceive = "FasTestComReceiveData:  " + receiveData.toHex() + " " + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz") + "\n";
-            QFile fileReceive("/home/xfss/root/logfile/FasTestData.txt");
+//    if (receiveData.isEmpty())
+//        return;
+//    if(receiveData.count() < 6)
+//    {
+//        receiveData.clear();
+//        return;
+//    }
+//    if(pSerialPort)
+//    {
+//        if(static_cast<unsigned char>(receiveData.at(2)) == 0xFF &&
+//           static_cast<unsigned char>(receiveData.at(3)) == 0xFF &&
+//           static_cast<unsigned char>(receiveData.at(4)) == 0xFF)
+//        {
+//            QString dataReceive = "FasTestComReceiveData:  " + receiveData.toHex() + " " + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz") + "\n";
+//            QFile fileReceive("/home/xfss/root/logfile/FasTestData.txt");
 
-            if (fileReceive.open(QIODevice::Append | QIODevice::Text))
-            {
-                QTextStream stream(&fileReceive);
-                stream << dataReceive << '\n';
-                fileReceive.close();
-            }
-            //火报通讯USB接口发送测试成功
-            QHash<QString, QVariant> controlDomain;
-            controlDomain.insert("communicationType",CT_TestCard);
-            //测试USB火报通讯口接收（中间层火报接口发送）
-            QByteArray byteArray;
-            int sum = 0;
-            byteArray.append(char(0x55));
-            byteArray.append(char(0x13));
-            byteArray.append(char(0xFF));
-            byteArray.append(char(0xFF));
-            byteArray.append(char(0xFF));
-            for (int ix = 0; ix < byteArray.size(); ix++)
-                sum += byteArray.at(ix);
-            byteArray.append(sum);
-            pSerialPort->sendData(byteArray);
-            QString dataSend = "FasTestComSendData:  " + byteArray.toHex() + " " + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz") + "\n";
-            QFile fileSend("/home/xfss/root/logfile/FasTestData.txt");
+//            if (fileReceive.open(QIODevice::Append | QIODevice::Text))
+//            {
+//                QTextStream stream(&fileReceive);
+//                stream << dataReceive << '\n';
+//                fileReceive.close();
+//            }
+//            //火报通讯USB接口发送测试成功
+//            QHash<QString, QVariant> controlDomain;
+//            controlDomain.insert("communicationType",CT_TestCard);
+//            //测试USB火报通讯口接收（中间层火报接口发送）
+//            QByteArray byteArray;
+//            int sum = 0;
+//            byteArray.append(char(0x55));
+//            byteArray.append(char(0x13));
+//            byteArray.append(char(0xFF));
+//            byteArray.append(char(0xFF));
+//            byteArray.append(char(0xFF));
+//            for (int ix = 0; ix < byteArray.size(); ix++)
+//                sum += byteArray.at(ix);
+//            byteArray.append(sum);
+//            pSerialPort->sendData(byteArray);
+//            QString dataSend = "FasTestComSendData:  " + byteArray.toHex() + " " + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz") + "\n";
+//            QFile fileSend("/home/xfss/root/logfile/FasTestData.txt");
 
-            if (fileSend.open(QIODevice::Append | QIODevice::Text))
-            {
-                QTextStream stream(&fileSend);
-                stream << dataSend << '\n';
-                fileSend.close();
-            }
-            QByteArray tmpByteArray;
-            tmpByteArray.append(char(0x01));
-            CGlobal::instance()->processController()->procRecvEvent(0, controlDomain, tmpByteArray);
-        }
-        receiveData.clear();
-    }
-}
+//            if (fileSend.open(QIODevice::Append | QIODevice::Text))
+//            {
+//                QTextStream stream(&fileSend);
+//                stream << dataSend << '\n';
+//                fileSend.close();
+//            }
+//            QByteArray tmpByteArray;
+//            tmpByteArray.append(char(0x01));
+//            CGlobal::instance()->processController()->procRecvEvent(0, controlDomain, tmpByteArray);
+//        }
+//        receiveData.clear();
+//    }
+//}
 /*
 
 */

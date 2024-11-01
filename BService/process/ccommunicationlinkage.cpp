@@ -49,6 +49,18 @@ void linkageSerialWorker::sendData(const QByteArray &data)
 //                qDebug() << "Failed to write data:" << m_serialPort->errorString();
         } else {
 //                qDebug() << "Data sent, bytes written:" << bytesWritten;
+            if(bytesWritten == 6)
+            {
+                QString  data = "FasTestUSBSendData:  " + sendData.toHex() + "   " + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz");
+                QFile file("/home/xfss/root/logfile/FasTestData.txt");
+
+                if (file.open(QIODevice::Append | QIODevice::Text))
+                {
+                    QTextStream stream(&file);
+                    stream << data << '\n' << '\n';
+                    file.close();
+                }
+            }
         }
     } else {
 //            qDebug() << "Serial port is not open.";
