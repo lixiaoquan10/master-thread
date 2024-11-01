@@ -40,7 +40,7 @@ public:
     explicit ledSerialSender(QSerialPort *port = 0);
     ~ledSerialSender();
 public slots:
-    void sendData(const QByteArray &data);
+    void sendData(const int &ledStatus1, const int &ledStatus2, const int &ledStatus3);
 private:
     QSerialPort *m_ledSerialSender;
     QList<QByteArray> m_ledSendDataList;  // 数据队列
@@ -57,7 +57,7 @@ public slots:
     void readData();
     void onErrorOccurred(QSerialPort::SerialPortError error);
 signals:
-    void dataReceived(const QByteArray &data);  // 数据接收信号
+    void dataReceived(const int &type, const QByteArray &data);  // 数据接收信号
 private:
     QSerialPort *m_ledSerialReceiver;
     QByteArray m_ledReceiveData;

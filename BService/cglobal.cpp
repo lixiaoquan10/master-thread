@@ -67,6 +67,7 @@ CGlobal::CGlobal()
     m_isReceiveLinkageData = true;
 
     m_linkageTestStatus = 0;
+    m_isSerialportNameSeted = false;
 }
 
 CGlobal::~CGlobal()
@@ -213,11 +214,6 @@ QString CGlobal::getUidString(const QByteArray &buff,  int n)
         return "";
     if (nsize > 8)
         nsize = 8;
-//    for (ix = 0; ix < nsize; ix++)
-//    {
-//        quint8 tmp = (quint8) buff.at(ix);
-//        lResult += ((quint64)tmp) << (8*(nsize-ix-1));
-//    }
     for (ix = 0; ix < nsize; ix++)
         {
             quint8 tmp = (quint8)buff.at(ix);

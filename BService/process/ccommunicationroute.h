@@ -117,6 +117,8 @@
 #include <QTimer>
 #include <QSerialPort>
 #include "struct.h"
+#include "ccommunicationled.h"
+#include "ccommunicationlinkage.h"
 
 #define INTERFACEBOARD_TIMEOUT 4000
 #define INTERFACEBOARD_PORT_NUMBER_STR "_portNumber_"   // 0 ~ 4, 0 is the interface board
@@ -147,7 +149,6 @@ public:
     void canReceiveDataClear();
     void linkageSendData(QByteArray data);
 
-    void onDataProcessed(const QByteArray &data);
     QSerialPort* makeSerialPort(QString serialName, long baudrate);
     long ledSerialBaudRate() { return m_ledSerialPort->baudRate(); }
     QString ledSerialName() { return m_ledSerialPort->portName(); }
@@ -167,25 +168,35 @@ private:
 signals:
     void communicationSendEvent(const QString& name, const QString &commandName, const QHash<QString, QVariant>& control, const QByteArray &data);
     void processRecvEvent(const QString& processname, const int &infotype, const QHash<QString, QVariant>& control, const QByteArray &data);
-    void ledSendDataRequested(const QByteArray &data); // 自定义信号
-    void linkageSendDataRequested(const QByteArray &data); // 自定义信号
-    void setLinkageMsg(const long &baudrate, const QString &portName);
+    void ledSendDataRequested(const int &ledStatus1, const int &ledStatus2, const int &ledStatus3);     // 灯键发送数据信号
+    void linkageSendDataRequested(const QByteArray &data); // 火报发送数据信号
 public slots:
     void procCommunicationRecvEvent(const QString &lineName,const int &infoType,
                                     const QHash<QString, QVariant> &controlDomain,
                                     const QByteArray &data);
     void slot_stopTestLinkageCom();
-    void slot_startChangeLinkageSerialPort();
-    void slot_endChangeLinkageSerialPort();
+    void slot_dataProcessed(const int &type, const QByteArray &data);
+    void slot_ChangeLinkageSerialPort();
+    void slot_switchLedAndLinkageSerial(const QByteArray &data);
 public:
     CCommunicationManager*  m_communicationManager;
-//    QThread *m_ledThread;
+    //灯键串口
     QSerialPort *m_ledSerialPort;
-    QSerialPort *m_linkageSerialPort;
+    //灯键发送线程
     QThread *m_ledSendThread;
+    //灯键发送处理类
+    ledSerialSender *m_ledSerialSender;
+    //灯键接收线程
     QThread *m_ledReceiveThread;
+    //灯键接收处理类
+    ledSerialReceiver *m_ledSerialReceiver;
+    //火报串口
+    QSerialPort *m_linkageSerialPort;
+    //火报线程
     QThread *m_linkageThread;
-    QByteArray m_receiveData;
+    //火报处理类
+    linkageSerialWorker *m_linkageSerial;
+    //火报波特率
     long m_linkageBaudrate;
 private:
     CCommunicationManager*  m_printManager;

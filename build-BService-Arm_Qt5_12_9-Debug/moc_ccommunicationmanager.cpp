@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_CCommunicationManager_t {
-    QByteArrayData data[19];
-    char stringdata0[296];
+    QByteArrayData data[16];
+    char stringdata0[230];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -42,23 +42,19 @@ QT_MOC_LITERAL(7, 89, 13), // "controlDomain"
 QT_MOC_LITERAL(8, 103, 4), // "data"
 QT_MOC_LITERAL(9, 108, 12), // "doReciveData"
 QT_MOC_LITERAL(10, 121, 4), // "name"
-QT_MOC_LITERAL(11, 126, 21), // "slot_LinkageFlagReset"
-QT_MOC_LITERAL(12, 148, 15), // "slot_ARTUDIsend"
-QT_MOC_LITERAL(13, 164, 19), // "handleLedReciveData"
-QT_MOC_LITERAL(14, 184, 23), // "handleLinkageReciveData"
-QT_MOC_LITERAL(15, 208, 20), // "handleTestReciveData"
-QT_MOC_LITERAL(16, 229, 20), // "handleCan1ReciveData"
-QT_MOC_LITERAL(17, 250, 20), // "handleCan2ReciveData"
-QT_MOC_LITERAL(18, 271, 24) // "updataRecentSerialNumber"
+QT_MOC_LITERAL(11, 126, 15), // "slot_ARTUDIsend"
+QT_MOC_LITERAL(12, 142, 20), // "handleTestReciveData"
+QT_MOC_LITERAL(13, 163, 20), // "handleCan1ReciveData"
+QT_MOC_LITERAL(14, 184, 20), // "handleCan2ReciveData"
+QT_MOC_LITERAL(15, 205, 24) // "updataRecentSerialNumber"
 
     },
     "CCommunicationManager\0sig_ReceivedPacket\0"
     "\0nSerialNumber\0sig_ReciveData\0lineName\0"
     "infoType\0controlDomain\0data\0doReciveData\0"
-    "name\0slot_LinkageFlagReset\0slot_ARTUDIsend\0"
-    "handleLedReciveData\0handleLinkageReciveData\0"
-    "handleTestReciveData\0handleCan1ReciveData\0"
-    "handleCan2ReciveData\0updataRecentSerialNumber"
+    "name\0slot_ARTUDIsend\0handleTestReciveData\0"
+    "handleCan1ReciveData\0handleCan2ReciveData\0"
+    "updataRecentSerialNumber"
 };
 #undef QT_MOC_LITERAL
 
@@ -68,7 +64,7 @@ static const uint qt_meta_data_CCommunicationManager[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -76,19 +72,16 @@ static const uint qt_meta_data_CCommunicationManager[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   69,    2, 0x06 /* Public */,
-       4,    4,   72,    2, 0x06 /* Public */,
+       1,    1,   54,    2, 0x06 /* Public */,
+       4,    4,   57,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       9,    2,   81,    2, 0x0a /* Public */,
-      11,    0,   86,    2, 0x0a /* Public */,
-      12,    0,   87,    2, 0x0a /* Public */,
-      13,    0,   88,    2, 0x08 /* Private */,
-      14,    0,   89,    2, 0x08 /* Private */,
-      15,    0,   90,    2, 0x08 /* Private */,
-      16,    0,   91,    2, 0x08 /* Private */,
-      17,    0,   92,    2, 0x08 /* Private */,
-      18,    2,   93,    2, 0x08 /* Private */,
+       9,    2,   66,    2, 0x0a /* Public */,
+      11,    0,   71,    2, 0x0a /* Public */,
+      12,    0,   72,    2, 0x08 /* Private */,
+      13,    0,   73,    2, 0x08 /* Private */,
+      14,    0,   74,    2, 0x08 /* Private */,
+      15,    2,   75,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -96,9 +89,6 @@ static const uint qt_meta_data_CCommunicationManager[] = {
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QByteArray,   10,    8,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -117,14 +107,11 @@ void CCommunicationManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c
         case 0: _t->sig_ReceivedPacket((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 1: _t->sig_ReciveData((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const int(*)>(_a[2])),(*reinterpret_cast< const QHash<QString,QVariant>(*)>(_a[3])),(*reinterpret_cast< const QByteArray(*)>(_a[4]))); break;
         case 2: _t->doReciveData((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QByteArray(*)>(_a[2]))); break;
-        case 3: _t->slot_LinkageFlagReset(); break;
-        case 4: _t->slot_ARTUDIsend(); break;
-        case 5: _t->handleLedReciveData(); break;
-        case 6: _t->handleLinkageReciveData(); break;
-        case 7: _t->handleTestReciveData(); break;
-        case 8: _t->handleCan1ReciveData(); break;
-        case 9: _t->handleCan2ReciveData(); break;
-        case 10: _t->updataRecentSerialNumber((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 3: _t->slot_ARTUDIsend(); break;
+        case 4: _t->handleTestReciveData(); break;
+        case 5: _t->handleCan1ReciveData(); break;
+        case 6: _t->handleCan2ReciveData(); break;
+        case 7: _t->updataRecentSerialNumber((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -175,13 +162,13 @@ int CCommunicationManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 8)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 11;
+        _id -= 8;
     }
     return _id;
 }

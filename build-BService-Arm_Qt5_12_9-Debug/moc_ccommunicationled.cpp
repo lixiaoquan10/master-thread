@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ledSerialSender_t {
-    QByteArrayData data[4];
-    char stringdata0[31];
+    QByteArrayData data[6];
+    char stringdata0[59];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,10 +34,13 @@ static const qt_meta_stringdata_ledSerialSender_t qt_meta_stringdata_ledSerialSe
 QT_MOC_LITERAL(0, 0, 15), // "ledSerialSender"
 QT_MOC_LITERAL(1, 16, 8), // "sendData"
 QT_MOC_LITERAL(2, 25, 0), // ""
-QT_MOC_LITERAL(3, 26, 4) // "data"
+QT_MOC_LITERAL(3, 26, 10), // "ledStatus1"
+QT_MOC_LITERAL(4, 37, 10), // "ledStatus2"
+QT_MOC_LITERAL(5, 48, 10) // "ledStatus3"
 
     },
-    "ledSerialSender\0sendData\0\0data"
+    "ledSerialSender\0sendData\0\0ledStatus1\0"
+    "ledStatus2\0ledStatus3"
 };
 #undef QT_MOC_LITERAL
 
@@ -55,10 +58,10 @@ static const uint qt_meta_data_ledSerialSender[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   19,    2, 0x0a /* Public */,
+       1,    3,   19,    2, 0x0a /* Public */,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QByteArray,    3,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,    3,    4,    5,
 
        0        // eod
 };
@@ -69,7 +72,7 @@ void ledSerialSender::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         auto *_t = static_cast<ledSerialSender *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->sendData((*reinterpret_cast< const QByteArray(*)>(_a[1]))); break;
+        case 0: _t->sendData((*reinterpret_cast< const int(*)>(_a[1])),(*reinterpret_cast< const int(*)>(_a[2])),(*reinterpret_cast< const int(*)>(_a[3]))); break;
         default: ;
         }
     }
@@ -115,8 +118,8 @@ int ledSerialSender::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     return _id;
 }
 struct qt_meta_stringdata_ledSerialReceiver_t {
-    QByteArrayData data[8];
-    char stringdata0[97];
+    QByteArrayData data[9];
+    char stringdata0[102];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -128,15 +131,16 @@ static const qt_meta_stringdata_ledSerialReceiver_t qt_meta_stringdata_ledSerial
 QT_MOC_LITERAL(0, 0, 17), // "ledSerialReceiver"
 QT_MOC_LITERAL(1, 18, 12), // "dataReceived"
 QT_MOC_LITERAL(2, 31, 0), // ""
-QT_MOC_LITERAL(3, 32, 4), // "data"
-QT_MOC_LITERAL(4, 37, 8), // "readData"
-QT_MOC_LITERAL(5, 46, 15), // "onErrorOccurred"
-QT_MOC_LITERAL(6, 62, 28), // "QSerialPort::SerialPortError"
-QT_MOC_LITERAL(7, 91, 5) // "error"
+QT_MOC_LITERAL(3, 32, 4), // "type"
+QT_MOC_LITERAL(4, 37, 4), // "data"
+QT_MOC_LITERAL(5, 42, 8), // "readData"
+QT_MOC_LITERAL(6, 51, 15), // "onErrorOccurred"
+QT_MOC_LITERAL(7, 67, 28), // "QSerialPort::SerialPortError"
+QT_MOC_LITERAL(8, 96, 5) // "error"
 
     },
-    "ledSerialReceiver\0dataReceived\0\0data\0"
-    "readData\0onErrorOccurred\0"
+    "ledSerialReceiver\0dataReceived\0\0type\0"
+    "data\0readData\0onErrorOccurred\0"
     "QSerialPort::SerialPortError\0error"
 };
 #undef QT_MOC_LITERAL
@@ -155,18 +159,18 @@ static const uint qt_meta_data_ledSerialReceiver[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   29,    2, 0x06 /* Public */,
+       1,    2,   29,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   32,    2, 0x0a /* Public */,
-       5,    1,   33,    2, 0x0a /* Public */,
+       5,    0,   34,    2, 0x0a /* Public */,
+       6,    1,   35,    2, 0x0a /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QByteArray,    3,
+    QMetaType::Void, QMetaType::Int, QMetaType::QByteArray,    3,    4,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 6,    7,
+    QMetaType::Void, 0x80000000 | 7,    8,
 
        0        // eod
 };
@@ -177,7 +181,7 @@ void ledSerialReceiver::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         auto *_t = static_cast<ledSerialReceiver *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->dataReceived((*reinterpret_cast< const QByteArray(*)>(_a[1]))); break;
+        case 0: _t->dataReceived((*reinterpret_cast< const int(*)>(_a[1])),(*reinterpret_cast< const QByteArray(*)>(_a[2]))); break;
         case 1: _t->readData(); break;
         case 2: _t->onErrorOccurred((*reinterpret_cast< QSerialPort::SerialPortError(*)>(_a[1]))); break;
         default: ;
@@ -185,7 +189,7 @@ void ledSerialReceiver::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (ledSerialReceiver::*)(const QByteArray & );
+            using _t = void (ledSerialReceiver::*)(const int & , const QByteArray & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&ledSerialReceiver::dataReceived)) {
                 *result = 0;
                 return;
@@ -235,9 +239,9 @@ int ledSerialReceiver::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void ledSerialReceiver::dataReceived(const QByteArray & _t1)
+void ledSerialReceiver::dataReceived(const int & _t1, const QByteArray & _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP

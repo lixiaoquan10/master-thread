@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_linkageSerialWorker_t {
     QByteArrayData data[14];
-    char stringdata0[171];
+    char stringdata0[190];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,26 +32,26 @@ struct qt_meta_stringdata_linkageSerialWorker_t {
 static const qt_meta_stringdata_linkageSerialWorker_t qt_meta_stringdata_linkageSerialWorker = {
     {
 QT_MOC_LITERAL(0, 0, 19), // "linkageSerialWorker"
-QT_MOC_LITERAL(1, 20, 15), // "ledDataReceived"
-QT_MOC_LITERAL(2, 36, 0), // ""
-QT_MOC_LITERAL(3, 37, 4), // "data"
-QT_MOC_LITERAL(4, 42, 5), // "debug"
-QT_MOC_LITERAL(5, 48, 21), // "changeLinkageComplete"
-QT_MOC_LITERAL(6, 70, 8), // "sendData"
-QT_MOC_LITERAL(7, 79, 8), // "readData"
-QT_MOC_LITERAL(8, 88, 13), // "setLinkageMsg"
-QT_MOC_LITERAL(9, 102, 8), // "baudrate"
-QT_MOC_LITERAL(10, 111, 8), // "portName"
-QT_MOC_LITERAL(11, 120, 15), // "onErrorOccurred"
-QT_MOC_LITERAL(12, 136, 28), // "QSerialPort::SerialPortError"
-QT_MOC_LITERAL(13, 165, 5) // "error"
+QT_MOC_LITERAL(1, 20, 19), // "linkageDataReceived"
+QT_MOC_LITERAL(2, 40, 0), // ""
+QT_MOC_LITERAL(3, 41, 4), // "type"
+QT_MOC_LITERAL(4, 46, 4), // "data"
+QT_MOC_LITERAL(5, 51, 25), // "switchLedAndLinkageSerial"
+QT_MOC_LITERAL(6, 77, 5), // "debug"
+QT_MOC_LITERAL(7, 83, 8), // "sendData"
+QT_MOC_LITERAL(8, 92, 8), // "readData"
+QT_MOC_LITERAL(9, 101, 15), // "onErrorOccurred"
+QT_MOC_LITERAL(10, 117, 28), // "QSerialPort::SerialPortError"
+QT_MOC_LITERAL(11, 146, 5), // "error"
+QT_MOC_LITERAL(12, 152, 21), // "slot_LinkageFlagReset"
+QT_MOC_LITERAL(13, 174, 15) // "slot_ARTUDIsend"
 
     },
-    "linkageSerialWorker\0ledDataReceived\0"
-    "\0data\0debug\0changeLinkageComplete\0"
-    "sendData\0readData\0setLinkageMsg\0"
-    "baudrate\0portName\0onErrorOccurred\0"
-    "QSerialPort::SerialPortError\0error"
+    "linkageSerialWorker\0linkageDataReceived\0"
+    "\0type\0data\0switchLedAndLinkageSerial\0"
+    "debug\0sendData\0readData\0onErrorOccurred\0"
+    "QSerialPort::SerialPortError\0error\0"
+    "slot_LinkageFlagReset\0slot_ARTUDIsend"
 };
 #undef QT_MOC_LITERAL
 
@@ -61,7 +61,7 @@ static const uint qt_meta_data_linkageSerialWorker[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -69,26 +69,28 @@ static const uint qt_meta_data_linkageSerialWorker[] = {
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   49,    2, 0x06 /* Public */,
-       4,    1,   52,    2, 0x06 /* Public */,
-       5,    0,   55,    2, 0x06 /* Public */,
+       1,    2,   54,    2, 0x06 /* Public */,
+       5,    1,   59,    2, 0x06 /* Public */,
+       6,    1,   62,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       6,    1,   56,    2, 0x0a /* Public */,
-       7,    0,   59,    2, 0x0a /* Public */,
-       8,    2,   60,    2, 0x0a /* Public */,
-      11,    1,   65,    2, 0x0a /* Public */,
+       7,    1,   65,    2, 0x0a /* Public */,
+       8,    0,   68,    2, 0x0a /* Public */,
+       9,    1,   69,    2, 0x0a /* Public */,
+      12,    0,   72,    2, 0x0a /* Public */,
+      13,    0,   73,    2, 0x0a /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QByteArray,    3,
-    QMetaType::Void, QMetaType::QByteArray,    3,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, QMetaType::QByteArray,    3,    4,
+    QMetaType::Void, QMetaType::QByteArray,    4,
+    QMetaType::Void, QMetaType::QByteArray,    4,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QByteArray,    3,
+    QMetaType::Void, QMetaType::QByteArray,    4,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Long, QMetaType::QString,    9,   10,
-    QMetaType::Void, 0x80000000 | 12,   13,
+    QMetaType::Void, 0x80000000 | 10,   11,
+    QMetaType::Void,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -99,34 +101,35 @@ void linkageSerialWorker::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         auto *_t = static_cast<linkageSerialWorker *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->ledDataReceived((*reinterpret_cast< const QByteArray(*)>(_a[1]))); break;
-        case 1: _t->debug((*reinterpret_cast< const QByteArray(*)>(_a[1]))); break;
-        case 2: _t->changeLinkageComplete(); break;
+        case 0: _t->linkageDataReceived((*reinterpret_cast< const int(*)>(_a[1])),(*reinterpret_cast< const QByteArray(*)>(_a[2]))); break;
+        case 1: _t->switchLedAndLinkageSerial((*reinterpret_cast< const QByteArray(*)>(_a[1]))); break;
+        case 2: _t->debug((*reinterpret_cast< const QByteArray(*)>(_a[1]))); break;
         case 3: _t->sendData((*reinterpret_cast< const QByteArray(*)>(_a[1]))); break;
         case 4: _t->readData(); break;
-        case 5: _t->setLinkageMsg((*reinterpret_cast< const long(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 6: _t->onErrorOccurred((*reinterpret_cast< QSerialPort::SerialPortError(*)>(_a[1]))); break;
+        case 5: _t->onErrorOccurred((*reinterpret_cast< QSerialPort::SerialPortError(*)>(_a[1]))); break;
+        case 6: _t->slot_LinkageFlagReset(); break;
+        case 7: _t->slot_ARTUDIsend(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (linkageSerialWorker::*)(const QByteArray & );
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&linkageSerialWorker::ledDataReceived)) {
+            using _t = void (linkageSerialWorker::*)(const int & , const QByteArray & );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&linkageSerialWorker::linkageDataReceived)) {
                 *result = 0;
                 return;
             }
         }
         {
             using _t = void (linkageSerialWorker::*)(const QByteArray & );
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&linkageSerialWorker::debug)) {
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&linkageSerialWorker::switchLedAndLinkageSerial)) {
                 *result = 1;
                 return;
             }
         }
         {
-            using _t = void (linkageSerialWorker::*)();
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&linkageSerialWorker::changeLinkageComplete)) {
+            using _t = void (linkageSerialWorker::*)(const QByteArray & );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&linkageSerialWorker::debug)) {
                 *result = 2;
                 return;
             }
@@ -163,35 +166,36 @@ int linkageSerialWorker::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 8)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 8;
     }
     return _id;
 }
 
 // SIGNAL 0
-void linkageSerialWorker::ledDataReceived(const QByteArray & _t1)
+void linkageSerialWorker::linkageDataReceived(const int & _t1, const QByteArray & _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
 // SIGNAL 1
-void linkageSerialWorker::debug(const QByteArray & _t1)
+void linkageSerialWorker::switchLedAndLinkageSerial(const QByteArray & _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 
 // SIGNAL 2
-void linkageSerialWorker::changeLinkageComplete()
+void linkageSerialWorker::debug(const QByteArray & _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

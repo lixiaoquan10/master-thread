@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_CCommunicationRoute_t {
-    QByteArrayData data[22];
-    char stringdata0[339];
+    QByteArrayData data[24];
+    char stringdata0[358];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -42,28 +42,31 @@ QT_MOC_LITERAL(7, 74, 16), // "processRecvEvent"
 QT_MOC_LITERAL(8, 91, 11), // "processname"
 QT_MOC_LITERAL(9, 103, 8), // "infotype"
 QT_MOC_LITERAL(10, 112, 20), // "ledSendDataRequested"
-QT_MOC_LITERAL(11, 133, 24), // "linkageSendDataRequested"
-QT_MOC_LITERAL(12, 158, 13), // "setLinkageMsg"
-QT_MOC_LITERAL(13, 172, 8), // "baudrate"
-QT_MOC_LITERAL(14, 181, 8), // "portName"
-QT_MOC_LITERAL(15, 190, 26), // "procCommunicationRecvEvent"
-QT_MOC_LITERAL(16, 217, 8), // "lineName"
-QT_MOC_LITERAL(17, 226, 8), // "infoType"
-QT_MOC_LITERAL(18, 235, 13), // "controlDomain"
-QT_MOC_LITERAL(19, 249, 23), // "slot_stopTestLinkageCom"
-QT_MOC_LITERAL(20, 273, 33), // "slot_startChangeLinkageSerial..."
-QT_MOC_LITERAL(21, 307, 31) // "slot_endChangeLinkageSerialPort"
+QT_MOC_LITERAL(11, 133, 10), // "ledStatus1"
+QT_MOC_LITERAL(12, 144, 10), // "ledStatus2"
+QT_MOC_LITERAL(13, 155, 10), // "ledStatus3"
+QT_MOC_LITERAL(14, 166, 24), // "linkageSendDataRequested"
+QT_MOC_LITERAL(15, 191, 26), // "procCommunicationRecvEvent"
+QT_MOC_LITERAL(16, 218, 8), // "lineName"
+QT_MOC_LITERAL(17, 227, 8), // "infoType"
+QT_MOC_LITERAL(18, 236, 13), // "controlDomain"
+QT_MOC_LITERAL(19, 250, 23), // "slot_stopTestLinkageCom"
+QT_MOC_LITERAL(20, 274, 18), // "slot_dataProcessed"
+QT_MOC_LITERAL(21, 293, 4), // "type"
+QT_MOC_LITERAL(22, 298, 28), // "slot_ChangeLinkageSerialPort"
+QT_MOC_LITERAL(23, 327, 30) // "slot_switchLedAndLinkageSerial"
 
     },
     "CCommunicationRoute\0communicationSendEvent\0"
     "\0name\0commandName\0control\0data\0"
     "processRecvEvent\0processname\0infotype\0"
-    "ledSendDataRequested\0linkageSendDataRequested\0"
-    "setLinkageMsg\0baudrate\0portName\0"
+    "ledSendDataRequested\0ledStatus1\0"
+    "ledStatus2\0ledStatus3\0linkageSendDataRequested\0"
     "procCommunicationRecvEvent\0lineName\0"
     "infoType\0controlDomain\0slot_stopTestLinkageCom\0"
-    "slot_startChangeLinkageSerialPort\0"
-    "slot_endChangeLinkageSerialPort"
+    "slot_dataProcessed\0type\0"
+    "slot_ChangeLinkageSerialPort\0"
+    "slot_switchLedAndLinkageSerial"
 };
 #undef QT_MOC_LITERAL
 
@@ -78,33 +81,33 @@ static const uint qt_meta_data_CCommunicationRoute[] = {
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       5,       // signalCount
+       4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
        1,    4,   59,    2, 0x06 /* Public */,
        7,    4,   68,    2, 0x06 /* Public */,
-      10,    1,   77,    2, 0x06 /* Public */,
-      11,    1,   80,    2, 0x06 /* Public */,
-      12,    2,   83,    2, 0x06 /* Public */,
+      10,    3,   77,    2, 0x06 /* Public */,
+      14,    1,   84,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      15,    4,   88,    2, 0x0a /* Public */,
-      19,    0,   97,    2, 0x0a /* Public */,
-      20,    0,   98,    2, 0x0a /* Public */,
-      21,    0,   99,    2, 0x0a /* Public */,
+      15,    4,   87,    2, 0x0a /* Public */,
+      19,    0,   96,    2, 0x0a /* Public */,
+      20,    2,   97,    2, 0x0a /* Public */,
+      22,    0,  102,    2, 0x0a /* Public */,
+      23,    1,  103,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QVariantHash, QMetaType::QByteArray,    3,    4,    5,    6,
     QMetaType::Void, QMetaType::QString, QMetaType::Int, QMetaType::QVariantHash, QMetaType::QByteArray,    8,    9,    5,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   11,   12,   13,
     QMetaType::Void, QMetaType::QByteArray,    6,
-    QMetaType::Void, QMetaType::QByteArray,    6,
-    QMetaType::Void, QMetaType::Long, QMetaType::QString,   13,   14,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::Int, QMetaType::QVariantHash, QMetaType::QByteArray,   16,   17,   18,    6,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, QMetaType::QByteArray,   21,    6,
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::QByteArray,    6,
 
        0        // eod
 };
@@ -117,13 +120,13 @@ void CCommunicationRoute::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         switch (_id) {
         case 0: _t->communicationSendEvent((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QHash<QString,QVariant>(*)>(_a[3])),(*reinterpret_cast< const QByteArray(*)>(_a[4]))); break;
         case 1: _t->processRecvEvent((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const int(*)>(_a[2])),(*reinterpret_cast< const QHash<QString,QVariant>(*)>(_a[3])),(*reinterpret_cast< const QByteArray(*)>(_a[4]))); break;
-        case 2: _t->ledSendDataRequested((*reinterpret_cast< const QByteArray(*)>(_a[1]))); break;
+        case 2: _t->ledSendDataRequested((*reinterpret_cast< const int(*)>(_a[1])),(*reinterpret_cast< const int(*)>(_a[2])),(*reinterpret_cast< const int(*)>(_a[3]))); break;
         case 3: _t->linkageSendDataRequested((*reinterpret_cast< const QByteArray(*)>(_a[1]))); break;
-        case 4: _t->setLinkageMsg((*reinterpret_cast< const long(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 5: _t->procCommunicationRecvEvent((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const int(*)>(_a[2])),(*reinterpret_cast< const QHash<QString,QVariant>(*)>(_a[3])),(*reinterpret_cast< const QByteArray(*)>(_a[4]))); break;
-        case 6: _t->slot_stopTestLinkageCom(); break;
-        case 7: _t->slot_startChangeLinkageSerialPort(); break;
-        case 8: _t->slot_endChangeLinkageSerialPort(); break;
+        case 4: _t->procCommunicationRecvEvent((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const int(*)>(_a[2])),(*reinterpret_cast< const QHash<QString,QVariant>(*)>(_a[3])),(*reinterpret_cast< const QByteArray(*)>(_a[4]))); break;
+        case 5: _t->slot_stopTestLinkageCom(); break;
+        case 6: _t->slot_dataProcessed((*reinterpret_cast< const int(*)>(_a[1])),(*reinterpret_cast< const QByteArray(*)>(_a[2]))); break;
+        case 7: _t->slot_ChangeLinkageSerialPort(); break;
+        case 8: _t->slot_switchLedAndLinkageSerial((*reinterpret_cast< const QByteArray(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -143,7 +146,7 @@ void CCommunicationRoute::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
             }
         }
         {
-            using _t = void (CCommunicationRoute::*)(const QByteArray & );
+            using _t = void (CCommunicationRoute::*)(const int & , const int & , const int & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&CCommunicationRoute::ledSendDataRequested)) {
                 *result = 2;
                 return;
@@ -153,13 +156,6 @@ void CCommunicationRoute::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
             using _t = void (CCommunicationRoute::*)(const QByteArray & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&CCommunicationRoute::linkageSendDataRequested)) {
                 *result = 3;
-                return;
-            }
-        }
-        {
-            using _t = void (CCommunicationRoute::*)(const long & , const QString & );
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&CCommunicationRoute::setLinkageMsg)) {
-                *result = 4;
                 return;
             }
         }
@@ -221,9 +217,9 @@ void CCommunicationRoute::processRecvEvent(const QString & _t1, const int & _t2,
 }
 
 // SIGNAL 2
-void CCommunicationRoute::ledSendDataRequested(const QByteArray & _t1)
+void CCommunicationRoute::ledSendDataRequested(const int & _t1, const int & _t2, const int & _t3)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 
@@ -232,13 +228,6 @@ void CCommunicationRoute::linkageSendDataRequested(const QByteArray & _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 3, _a);
-}
-
-// SIGNAL 4
-void CCommunicationRoute::setLinkageMsg(const long & _t1, const QString & _t2)
-{
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
-    QMetaObject::activate(this, &staticMetaObject, 4, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

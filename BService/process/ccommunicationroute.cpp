@@ -22,22 +22,21 @@ CCommunicationRoute::CCommunicationRoute(QObject *parent) :
     // 创建led串口
     m_ledSerialPort = makeSerialPort("/dev/ttyUSB0", QSerialPort::Baud19200);
 
-    // 创建led线程
+    // 创建led发送线程
     m_ledSendThread = new QThread;
-    ledSerialSender *ledSerialSend = new ledSerialSender(m_ledSerialPort);
-    ledSerialSend->moveToThread(m_ledSendThread);
-    // 启动led线程
+    m_ledSerialSender = new ledSerialSender(m_ledSerialPort);
+    m_ledSerialSender->moveToThread(m_ledSendThread);
+    // 启动led发送线程
     m_ledSendThread->start();
-    QObject::connect(this, &CCommunicationRoute::ledSendDataRequested, ledSerialSend, &ledSerialSender::sendData);
+    connect(this, &CCommunicationRoute::ledSendDataRequested, m_ledSerialSender, &ledSerialSender::sendData);
 
-
-    // 创建led线程
+    // 创建led接收线程
     m_ledReceiveThread = new QThread;
-    ledSerialReceiver *ledSerialReceive = new ledSerialReceiver(m_ledSerialPort);
-    ledSerialReceive->moveToThread(m_ledReceiveThread);
-    // 启动led线程
+    m_ledSerialReceiver = new ledSerialReceiver(m_ledSerialPort);
+    m_ledSerialReceiver->moveToThread(m_ledReceiveThread);
+    // 启动led接收线程
     m_ledReceiveThread->start();
-    QObject::connect(ledSerialReceive, &ledSerialReceiver::dataReceived, this, &CCommunicationRoute::onDataProcessed);
+    connect(m_ledSerialReceiver, &ledSerialReceiver::dataReceived, this, &CCommunicationRoute::slot_dataProcessed);
 
 //    // 创建led线程
 //    m_ledThread = new QThread;
@@ -46,28 +45,27 @@ CCommunicationRoute::CCommunicationRoute(QObject *parent) :
 //    // 启动led线程
 //    m_ledThread->start();
 //    // 连接led数据发送信号
-//    QObject::connect(this, &CCommunicationRoute::ledSendDataRequested, ledSerial, &ledSerialWorker::sendData);
+//    connect(this, &CCommunicationRoute::ledSendDataRequested, ledSerial, &ledSerialWorker::sendData);
 //    // 连接led数据接收信号
-//    QObject::connect(ledSerial, &ledSerialWorker::ledDataReceived, this, &CCommunicationRoute::onDataProcessed);
+//    connect(ledSerial, &ledSerialWorker::ledDataReceived, this, &CCommunicationRoute::onDataProcessed);
 
     // 创建linkage串口
     m_linkageSerialPort = makeSerialPort("/dev/ttyUSB1", QSerialPort::Baud19200);
 
     // 创建linkage线程
     m_linkageThread = new QThread;
-    linkageSerialWorker *linkageSerial = new linkageSerialWorker(m_linkageSerialPort);
-    linkageSerial->moveToThread(m_linkageThread);
+    m_linkageSerial = new linkageSerialWorker(m_linkageSerialPort);
+    m_linkageSerial->moveToThread(m_linkageThread);
     // 启动linkage线程
     m_linkageThread->start();
     // 连接linkage数据发送信号
-    QObject::connect(this, &CCommunicationRoute::linkageSendDataRequested, linkageSerial, &linkageSerialWorker::sendData);
-    QObject::connect(this, &CCommunicationRoute::setLinkageMsg, linkageSerial, &linkageSerialWorker::setLinkageMsg);
+    connect(this, &CCommunicationRoute::linkageSendDataRequested, m_linkageSerial, &linkageSerialWorker::sendData);
     // 连接linkage数据接收信号
-    QObject::connect(linkageSerial, &linkageSerialWorker::ledDataReceived, this, &CCommunicationRoute::onDataProcessed);
+    connect(m_linkageSerial, &linkageSerialWorker::linkageDataReceived, this, &CCommunicationRoute::slot_dataProcessed);
+    // 连接交换灯键和火报串口信号
+    connect(m_linkageSerial, &linkageSerialWorker::switchLedAndLinkageSerial, this, &CCommunicationRoute::slot_switchLedAndLinkageSerial);
 
-    QObject::connect(linkageSerial, &linkageSerialWorker::changeLinkageComplete, this, &CCommunicationRoute::slot_endChangeLinkageSerialPort);
-
-//    createCommunication(CT_LinkageCard);
+    //    createCommunication(CT_LinkageCard);
     createCommunication(CT_TestCard);
 }
 
@@ -75,7 +73,10 @@ CCommunicationRoute::~CCommunicationRoute()
 {
     delete m_communicationManager;
     delete m_ledSerialPort;
+    delete m_ledSerialSender;
+    delete m_ledSerialReceiver;
     delete m_linkageSerialPort;
+    delete m_linkageSerial;
     // 停止 LED 发送线程
     if (m_ledSendThread) {
         m_ledSendThread->quit();          // 请求线程退出
@@ -109,11 +110,10 @@ QSerialPort* CCommunicationRoute::makeSerialPort(QString serialName, long baudra
     return SerialPort;
 }
 
-void CCommunicationRoute::onDataProcessed(const QByteArray &data)
+void CCommunicationRoute::slot_dataProcessed(const int &type, const QByteArray &data)
 {
-    m_communicationManager->m_isSerialportNameSeted = true;
     QHash<QString, QVariant> controlDomain;
-    controlDomain.insert("communicationType",CT_LedCard);
+    controlDomain.insert("communicationType",type);
     CGlobal::instance()->processController()->procRecvEvent(0, controlDomain, data);
 }
 
@@ -204,110 +204,27 @@ void CCommunicationRoute::canReceiveDataClear()
 
 void CCommunicationRoute::setLedStatus(const int ledStatus1, const int ledStatus2, const int ledStatus3)
 {
-//    QString communicationLed = getCommunicationName(CT_LedCard);
-//    if(communicationLed.isEmpty())
-//        return;
-//    if(communicationIsActive(communicationLed))
-//    {
-//        QString linename = "ledcard";
-//        if(!m_communicationManager->m_hashCommunicationLine.contains(linename)) return;
-//        CSerialPort* pSerialPort = m_communicationManager->m_hashCommunicationLine[linename]->pSerialPort;
-//        if(pSerialPort)
-//        {
-    char sum = 0;
-    QByteArray byteArray;
-    byteArray.append(char(0x55));
-    byteArray.append(char(0x13));
-    byteArray.append(char(ledStatus1));
-    byteArray.append(char(0));
-    byteArray.append(char(0));
-    byteArray.append(char(0));
-    byteArray.append(char(ledStatus2));
-    byteArray.append(char(ledStatus3));
-    byteArray.append(char(0));
-    byteArray.append(char(0));
-    byteArray.append(char(0));
-    for (int ix = 0; ix < byteArray.size(); ix++)
-        sum += byteArray.at(ix);
-    byteArray.append(sum);
-    emit ledSendDataRequested(byteArray);
-    if(!m_communicationManager->isSerialportNameSeted())
+    emit ledSendDataRequested(ledStatus1, ledStatus2, ledStatus3);
+    if(!CGlobal::instance()->m_isSerialportNameSeted)
     {
+        char sum = 0;
+        QByteArray byteArray;
+        byteArray.append(char(0x55));
+        byteArray.append(char(0x13));
+        byteArray.append(char(ledStatus1));
+        byteArray.append(char(0));
+        byteArray.append(char(0));
+        byteArray.append(char(0));
+        byteArray.append(char(ledStatus2));
+        byteArray.append(char(ledStatus3));
+        byteArray.append(char(0));
+        byteArray.append(char(0));
+        byteArray.append(char(0));
+        for (int ix = 0; ix < byteArray.size(); ix++)
+            sum += byteArray.at(ix);
+        byteArray.append(sum);
         emit linkageSendDataRequested(byteArray);
     }
-//            QString data = "handleLedSendData:  " + byteArray.toHex() + " " + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz") + "\n";
-//            QFile file("/home/xfss/root/logfile/LedSendData.txt");
-
-//            if (file.open(QIODevice::Append | QIODevice::Text))
-//            {
-//                QTextStream stream(&file);
-//                stream << data << '\n';
-//                file.close();
-//            }
-//        }
-//    }
-//    else
-//    {
-//        m_communicationManager->close("ledcard");
-//        // 重新打开串口
-//        QString data;
-//        if(m_communicationManager->open("ledcard"))
-//        {
-//            data ="Led串口重新打开成功!  " + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz");
-//            // 连接信号与槽等相关操作
-//        }  else {
-//            data ="Led串口重新打开失败!  " + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz");
-//        }
-//        QFile file("/home/xfss/root/logfile/ledportlog.txt");
-
-//        if (file.open(QIODevice::Append | QIODevice::Text))
-//        {
-//            QTextStream stream(&file);
-//            stream << data << '\n' << '\n';
-//            file.close();
-//        }
-//    }
-//    if(!m_communicationManager->isSerialportNameSeted())
-//    {
-//        QString communicationLinkage = getCommunicationName(CT_LinkageCard);
-//        if(communicationLinkage.isEmpty())
-//            return;
-//        if(communicationIsActive(communicationLinkage))
-//        {
-//            QString linename = "linkagecard";
-//            if(!m_communicationManager->m_hashCommunicationLine.contains(linename)) return;
-//            CSerialPort* pSerialPort = m_communicationManager->m_hashCommunicationLine[linename]->pSerialPort;
-//            if(pSerialPort)
-//            {
-//                char sum = 0;
-//                QByteArray byteArray;
-//                byteArray.append(char(0x55));
-//                byteArray.append(char(0x13));
-//                byteArray.append(char(ledStatus1));
-//                byteArray.append(char(0));
-//                byteArray.append(char(0));
-//                byteArray.append(char(0));
-//                byteArray.append(char(ledStatus2));
-//                byteArray.append(char(ledStatus3));
-//                byteArray.append(char(0));
-//                byteArray.append(char(0));
-//                byteArray.append(char(0));
-//                for (int ix = 0; ix < byteArray.size(); ix++)
-//                    sum += byteArray.at(ix);
-//                byteArray.append(sum);
-//                pSerialPort->sendData(byteArray);
-//                QString data = "LedLinkageData:  " + byteArray.toHex() + " " + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz") + "\n";
-//                QFile file("/home/xfss/root/logfile/LedLinkageData.txt");
-
-//                if (file.open(QIODevice::Append | QIODevice::Text))
-//                {
-//                    QTextStream stream(&file);
-//                    stream << data << '\n';
-//                    file.close();
-//                }
-//            }
-//        }
-//    }
 }
 
 void CCommunicationRoute::testLinkageCom()
@@ -375,17 +292,6 @@ void CCommunicationRoute::slot_stopTestLinkageCom()
 
 void CCommunicationRoute::linkageSendData(QByteArray data)
 {
-//    QString communicationLinkage = getCommunicationName(CT_LinkageCard);
-//    if(communicationLinkage.isEmpty())
-//        return;
-//    if(communicationIsActive(communicationLinkage))
-//    {
-//        QString linename = "linkagecard";
-//        if(!m_communicationManager->m_hashCommunicationLine.contains(linename)) return;
-//        CSerialPort* pSerialPort = m_communicationManager->m_hashCommunicationLine[linename]->pSerialPort;
-////        m_communicationManager->sendLinkageData(communicationLinkage, SendFasFire, data);
-//        if(pSerialPort)
-//        {
     QByteArray byteArray;
     byteArray.append(data);
     // 计算 CRC 值
@@ -393,10 +299,9 @@ void CCommunicationRoute::linkageSendData(QByteArray data)
     const unsigned char *dataPtr = reinterpret_cast<const unsigned char *>(data.constData());
     unsigned short length = static_cast<unsigned short>(data.size());
     // 调用 CRC 函数
-    unsigned short crc = m_communicationManager->usMBCRC16(dataPtr, length);
+    unsigned short crc = CGlobal::instance()->usMBCRC16(dataPtr, length);
     byteArray.append(static_cast<char>(crc & 0xFF));        // 低字节
     byteArray.append(static_cast<char>((crc >> 8) & 0xFF)); // 高字节
-//            pSerialPort->sendData(byteArray);
     emit linkageSendDataRequested(byteArray);
 
     QString  str = "FasSendData:  " + byteArray.toHex() + "   " + QString::number(m_linkageSerialPort->baudRate()) + "   " + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz");
@@ -409,9 +314,7 @@ void CCommunicationRoute::linkageSendData(QByteArray data)
         file.close();
     }
     QString filePath = "/home/xfss/root/logfile/FasSendData.txt";
-    m_communicationManager->manageLogFile(filePath,4 * 1024 * 1024);
-//        }
-//    }
+    CGlobal::instance()->manageLogFile(filePath, 1024 * 1024);
 }
 
 //设置火报通讯波特率
@@ -421,18 +324,90 @@ void CCommunicationRoute::setLinkageBaudRate(QString baudrateString)
     CGlobal::instance()->processController()->stopLinkageCom();
     m_linkageBaudrate = baudrateString.toLong(); // 将QString转换为整数
     //延时修改火报通讯波特率
-    QTimer::singleShot(1000, this, SLOT(slot_startChangeLinkageSerialPort()));
+    QTimer::singleShot(1000, this, SLOT(slot_ChangeLinkageSerialPort()));
 }
 //开始修改火报通讯波特率
-void CCommunicationRoute::slot_startChangeLinkageSerialPort()
+void CCommunicationRoute::slot_ChangeLinkageSerialPort()
 {
-    emit setLinkageMsg(m_linkageBaudrate, m_linkageSerialPort->portName());
-}
-//修改火报通讯波特率修改完成
-void CCommunicationRoute::slot_endChangeLinkageSerialPort()
-{
+    disconnect(m_linkageSerialPort, &QSerialPort::readyRead, m_linkageSerial, &linkageSerialWorker::readData);
+
+    // 如果串口已打开，则先关闭
+    if (m_linkageSerialPort->isOpen()) {
+        m_linkageSerialPort->close();
+    }
+    m_linkageSerialPort->setBaudRate(m_linkageBaudrate);
+    m_linkageSerialPort->setPortName(m_linkageSerialPort->portName());
+    if(m_linkageSerialPort->open(QIODevice::ReadWrite))
+    {
+        connect(m_linkageSerialPort, &QSerialPort::readyRead, m_linkageSerial, &linkageSerialWorker::readData);
+    }
     CGlobal::instance()->processController()->startLinkageCom();
 }
+
+//交换灯键和火报串口
+void CCommunicationRoute::slot_switchLedAndLinkageSerial(const QByteArray &data)
+{
+    disconnect(m_linkageSerialPort, &QSerialPort::readyRead, m_linkageSerial, &linkageSerialWorker::readData);
+    disconnect(m_ledSerialPort, &QSerialPort::readyRead, m_ledSerialReceiver, &ledSerialReceiver::readData);
+    long ledBaudRate = m_ledSerialPort->baudRate();
+    long linkageBaudRate = m_linkageSerialPort->baudRate();
+    QString ledPortName = m_ledSerialPort->portName();
+    QString linkagePortName = m_linkageSerialPort->portName();
+    QString  log = "oldledPortName:  " + ledPortName + " "
+                    + QString::number(ledBaudRate) + "\n" +
+                    "oldlinkagePortName:  " + linkagePortName + " "
+                    + QString::number(linkageBaudRate) + "\n" +
+                    QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz") + "\n";
+    // 如果串口已打开，则先关闭
+    if (m_linkageSerialPort->isOpen()) {
+        m_linkageSerialPort->close();
+    }
+    // 如果串口已打开，则先关闭
+    if (m_ledSerialPort->isOpen()) {
+        m_ledSerialPort->close();
+    }
+    m_linkageSerialPort->setBaudRate(ledBaudRate);
+    m_linkageSerialPort->setPortName(ledPortName);
+    m_ledSerialPort->setBaudRate(linkageBaudRate);
+    m_ledSerialPort->setPortName(linkagePortName);
+    if(m_linkageSerialPort->open(QIODevice::ReadWrite))
+    {
+        log = log + "linkage串口重新打开成功" + "\n";
+        connect(m_linkageSerialPort, &QSerialPort::readyRead,
+                m_linkageSerial, &linkageSerialWorker::readData);
+    }
+    else
+    {
+        log = log + "linkage串口重新打开失败：" + m_linkageSerialPort->errorString() + "\n";
+    }
+    if(m_ledSerialPort->open(QIODevice::ReadWrite))
+    {
+        log = log + "led串口重新打开成功" + "\n";
+        connect(m_ledSerialPort, &QSerialPort::readyRead,
+                m_ledSerialReceiver, &ledSerialReceiver::readData);
+    }
+    else
+    {
+        log = log + "led串口重新打开失败：" + m_ledSerialPort->errorString() + "\n";
+    }
+    log = log + "newledPortName:  " + m_ledSerialPort->portName() + " "
+            + QString::number(m_ledSerialPort->baudRate()) + "\n" +
+            "newlinkagePortName:  " + m_linkageSerialPort->portName() + " "
+            + QString::number(m_linkageSerialPort->baudRate()) + "\n"
+            + QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss:zzz") + "\n";
+    QFile file("/home/xfss/root/logfile/portName.txt");
+
+    if (file.open(QIODevice::Append | QIODevice::Text))
+    {
+        QTextStream stream(&file);
+        stream << log << '\n' << '\n';
+        file.close();
+    }
+    CGlobal::instance()->m_isSerialportNameSeted = true;
+    //灯键接收数据处理
+    slot_dataProcessed(CT_LedCard, data);
+}
+
 
 ////get line name from line type
 QString CCommunicationRoute::getCommunicationName(const int type)
